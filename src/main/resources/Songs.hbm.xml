@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 20, 2017 1:21:37 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping package="com.milesgwood.moe.hbm">
+    <class name="Songs" table="songs" catalog="moe_db" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="showId" type="java.lang.Integer">
+            <column name="show_id" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="mtime" type="string">
+            <column name="mtime" length="20" />
+        </property>
+        <property name="source" type="string">
+            <column name="source" length="20" />
+        </property>
+        <property name="format" type="string">
+            <column name="format" length="20" />
+        </property>
+        <property name="length" type="string">
+            <column name="length" length="15" />
+        </property>
+        <property name="track" type="string">
+            <column name="track" length="10" />
+        </property>
+        <property name="title" type="string">
+            <column name="title" length="250" />
+        </property>
+        <property name="album" type="string">
+            <column name="album" length="250" />
+        </property>
+        <property name="score" type="java.lang.Integer">
+            <column name="score" />
+        </property>
+    </class>
+</hibernate-mapping>

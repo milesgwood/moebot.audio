@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 20, 2017 1:21:37 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping package="com.milesgwood.moe.hbm">
+    <class name="Shows" table="shows" catalog="moe_db" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="venue" type="string">
+            <column name="venue" />
+        </property>
+        <property name="showUrl" type="string">
+            <column name="show_url" not-null="true" />
+        </property>
+        <property name="showName" type="string">
+            <column name="show_name" length="200" />
+        </property>
+        <property name="date" type="string">
+            <column name="date" length="30" />
+        </property>
+        <property name="score" type="java.lang.Integer">
+            <column name="score" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -23,5 +23,20 @@
         <property name="score" type="java.lang.Integer">
             <column name="score" />
         </property>
+        <set 
+            name="setList" 
+            table="songs" 
+            inverse="false" 
+            lazy="true" 
+            fetch="select"
+            order-by="mtime asc">
+            <key>
+                <column name="show_id" not-null="true" />
+            </key>
+            <one-to-many
+                class="com.milesgwood.moe.hbm.Songs"
+                not-found="exception"
+            />
+        </set>
     </class>
 </hibernate-mapping>

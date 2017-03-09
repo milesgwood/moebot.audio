@@ -20,6 +20,8 @@ public class Songs  implements java.io.Serializable {
      private String title;
      private String album;
      private Integer score;
+     //The show attribute allows you to map from a song to it's parent show
+     private Shows show;
 
     public Songs() {
     }
@@ -40,7 +42,15 @@ public class Songs  implements java.io.Serializable {
        this.album = album;
        this.score = score;
     }
-   
+    
+    public Shows getShow() {
+        return show;
+    }
+
+    public void setShow(Shows show) {
+        this.show = show;
+    }
+    
     public Integer getId() {
         return this.id;
     }

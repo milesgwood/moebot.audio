@@ -8,9 +8,6 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="showId" type="java.lang.Integer">
-            <column name="show_id" />
-        </property>
         <property name="name" type="string">
             <column name="name" not-null="true" />
         </property>
@@ -38,5 +35,11 @@
         <property name="score" type="java.lang.Integer">
             <column name="score" />
         </property>
+        <property name="showId" type="java.lang.Integer">
+            <column name="show_id" />
+        </property>
+        <!-- This is what I had previously
+        
+        -->
     </class>
 </hibernate-mapping>

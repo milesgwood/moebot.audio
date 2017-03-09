@@ -5,6 +5,7 @@
  */
 package com.milesgwood.moe.servlets;
 
+import com.milesgwood.moe.hbm.OutgoingData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,10 +32,11 @@ public class PlayShowServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<li class='talk-bubble tri-left round border left-top botmsg'>Chat with me to sift through the 28 years of live moe. recordings in search of forgotten gems. If you're busy working you can just listen, and I'll keep the music flowing.</li><li class='talk-bubble tri-left round border left-top botmsg'>What do you want to do?</li>");
+            out.println(OutgoingData.retrieveShow().toJSON());
+            out.flush();
         }
     }
 

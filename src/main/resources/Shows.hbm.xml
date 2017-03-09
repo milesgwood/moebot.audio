@@ -27,7 +27,7 @@
             name="setList" 
             table="songs" 
             inverse="false" 
-            lazy="true" 
+            lazy="false" 
             fetch="select"
             order-by="mtime asc">
             <key>

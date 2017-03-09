@@ -22,6 +22,7 @@ public class Hibernate {
     private static SessionFactory sessionFactory = null;
 
     public static SessionFactory getSessionFactory() {
+        if(sessionFactory == null) setUp();
         return sessionFactory;
     }
 

@@ -1,8 +1,12 @@
 package com.milesgwood.moe.hbm;
 // Generated Feb 20, 2017 1:21:36 PM by Hibernate Tools 4.3.1
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -89,6 +93,22 @@ public class Shows  implements java.io.Serializable {
     
     public void setScore(Integer score) {
         this.score = score;
+    }
+    
+    /**
+     * This method converts the Shows object into JSON format to get sent in a HTTP response.
+     * @return 
+     */
+    public String toJSON() {
+        String jsonInString = "Something went horribly wrong when I tried to get that Show and turn it into JSON. I'm drunk. Leave me alone and go listen to something else other than show ID: " + this.id;
+        String errorMessage = jsonInString;
+        ObjectMapper mapper = new ObjectMapper();
+         try {
+             jsonInString = mapper.writeValueAsString(this);
+         } catch (JsonProcessingException ex) {
+             Logger.getLogger(Shows.class.getName()).log(Level.SEVERE, errorMessage, ex);
+         }
+        return jsonInString;
     }
 }
 

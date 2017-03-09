@@ -10,7 +10,9 @@ import com.milesgwood.moe.hbm.Songs;
 import java.util.List;
 import junit.framework.TestCase;
 import org.hibernate.Session;
+import org.junit.AfterClass;
 import static org.junit.Assert.assertNotEquals;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -23,25 +25,34 @@ public class TestingHibernate extends TestCase {
         super(testName);
     }
     
+    @BeforeClass
+    public static void setUpClass() {
+        Hibernate.setUp();
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        Hibernate.tearDown();
+
+    }
+    
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        Hibernate.setUp();
     }
    
     
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        //Hibernate.tearDown();
     }
     
     @Test
     public void testIfAnyShowsExist() {
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        List result = session.createQuery("from Shows").list();
-        assert(result.size() > 10);
+        List result = session.createQuery("from Shows").setMaxResults(3).list();
+        assert(result.size() > 2);
         session.getTransaction().commit();
         session.close();
     }
@@ -50,9 +61,9 @@ public class TestingHibernate extends TestCase {
      public void testIfAnySongsExist() {
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        List result = session.createQuery("from Songs").list(); 
+        List result = session.createQuery("from Songs").setMaxResults(3).list(); 
         //this huge size only works with lazy as true
-        assert(result.size() > 10);
+        assert(result.size() > 2);
         session.getTransaction().commit();
         session.close();
     }

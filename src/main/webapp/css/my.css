@@ -1,0 +1,229 @@
+.archive-bubble{
+  display: table;
+  color:#fff;
+}
+
+.archive-frame {
+  display: table-row;
+}
+
+.mybuttons{
+  position:absolute;
+  margin-left: auto;
+  margin-right: auto;
+  bottom:0;
+  padding: 10px;
+  background-color: grey;
+}
+
+.chat {
+  min-width: 290px;
+  padding-right: 40px;
+  padding-left: 40px;
+  background-color: lightgray;
+  list-style-type:none
+}
+
+.botmsg {
+  display: table;
+  margin-right: auto;
+  padding: 1em;
+  text-align: left;
+  line-height: 1.5em;
+}
+
+.botmsg p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}
+
+.usrmsg {
+  display: table;
+  margin-left: auto;
+}
+
+.usrmsg p {
+  background: linear-gradient(#FF9402, #E80000);
+  padding: 15px;
+  color: #fff;
+  border-radius: 10px;
+
+}
+
+.c-margin {
+  margin: auto;
+}
+
+body {
+  background-image: url("https://i.ytimg.com/vi/Vi0gsH6QgQ8/maxresdefault.jpg");
+  background-repeat: repeat-y;
+}
+
+#button-window  {
+  background-color: lightgray;
+  padding: 1em;
+}
+
+#button-window button {
+  border: 3px;
+  border-color: #666;
+  border-style: solid;
+}
+
+#main_options {
+    margin: 1em;
+    display: none;
+}
+
+#start_options {
+  display: flex;
+}
+
+#play {
+  display: none;
+}
+#like {
+  display: none;
+}
+#review {
+  display: none;
+}
+
+.typing-indicator {
+  float: left;
+  background-color: #075698;
+  width: auto;
+  border-radius: 50px;
+  padding: 20px;
+  display: table;
+  margin: 0 auto;
+  position: relative;
+  -webkit-animation: 2s bulge infinite ease-out;
+          animation: 2s bulge infinite ease-out;
+}
+.typing-indicator::before, .typing-indicator::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: -2px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #075698;
+}
+.typing-indicator::after {
+  height: 10px;
+  width: 10px;
+  left: -10px;
+  bottom: -10px;
+}
+.typing-indicator span {
+  height: 15px;
+  width: 15px;
+  float: left;
+  margin: 0 1px;
+  background-color: #9E9EA1;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.typing-indicator span:nth-of-type(1) {
+  -webkit-animation: 1s blink infinite 0.3333s;
+          animation: 1s blink infinite 0.3333s;
+}
+.typing-indicator span:nth-of-type(2) {
+  -webkit-animation: 1s blink infinite 0.6666s;
+          animation: 1s blink infinite 0.6666s;
+}
+.typing-indicator span:nth-of-type(3) {
+  -webkit-animation: 1s blink infinite 0.9999s;
+          animation: 1s blink infinite 0.9999s;
+}
+
+@-webkit-keyframes blink {
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes bulge {
+  50% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+}
+@keyframes bulge {
+  50% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+}
+
+/** Triangle stuff**/
+/* CSS talk bubble */
+.talk-bubble {
+	margin: 10px;
+  position: relative;
+  color:#fff;
+  background:#2e88c4; /* default background for browsers without gradient support */
+/* css3 */
+	background-color: #2e88c4;
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#075698), to(#075698));
+  background:-moz-linear-gradient(#075698, #2e88c4);
+  background:-o-linear-gradient(#075698, #2e88c4);
+  background:linear-gradient(#075698, #2e88c4);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+.border{
+  border: 8px solid #666;
+}
+.round{
+  border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+
+}
+
+/* Right triangle placed top right flush. */
+.tri-left.border.left-top:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -40px;
+	right: auto;
+  top: -8px;
+	bottom: auto;
+	border: 32px solid;
+	border-color: #666 transparent transparent transparent;
+}
+.tri-left.left-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -20px;
+	right: auto;
+  top: 0px;
+	bottom: auto;
+	border: 20px solid;
+	border-color: #065698 transparent transparent transparent;
+}
+
+/* Visibility */
+
+.visible {
+  visibility: visible;
+}
+
+.not-visible {
+  visibility: hidden;
+}

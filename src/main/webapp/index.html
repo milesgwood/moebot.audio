@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- <meta http-equiv="refresh" content="2"> -->
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <title>moe.bot</title>
+        <!-- Bootstrap core CSS -->
+        <link href="./css/bootstrap.css" rel="stylesheet">
+        <!-- Glyphicons added by css file -->
+        <link href="./css/glyphicons.css" rel="stylesheet" />
+        <!-- Custom styles for this template -->
+        <link href="./css/my.css" rel="stylesheet">
     </head>
+
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <img class=" col center-block" src="moeLogo.png" />
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <ul id="chatUl" class="col chat center-block">
+                    <li class="talk-bubble tri-left round border left-top botmsg">
+                        <p>I'm moe.bot!</p>
+                    </li>
+                    <!--Here's where the chat content gets added -->
+                </ul>
+            </div>
+            <!-- Start of the button options -->
+            <div id="button-window">
+                <div id='start_options' class="row">
+                    <div class='wrapper text-center col'>
+                        <div class="btn-group">
+                            <button id="justListen" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Just Listen">Just Listen
+                                <span class="glyphicon glyphicon-music"></span>
+                            </button>
+                            <button id="listenAndRate" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Listen And Rate">Listen & Rate
+                                <span class="glyphicon glyphicon-star"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id='main_options' class="row">
+                    <div class='wrapper text-center col'>
+                        <div class="btn-group">
+                            <button id="getLyrics" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Read Lyrics">Read Lyrics
+                                <span class="glyphicon glyphicon-music"></span>
+                            </button>
+                            <button id="makeReview" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Review Song">Review song
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                            <button id="getChat" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Let's chat">Let's Chat
+                                <span class="glyphicon glyphicon-comment"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id='play' class="row">
+                    <div class='wrapper text-center col'>
+                        <div class="btn-group">
+                            <button id="getNextSong" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Play Next Song">Play Next Song
+                                <span class="glyphicon glyphicon-step-forward"></span>
+                            </button>
+                            <button id="getNextShow" type="button" class="btn btn-primary btn-lg" onclick="addUserResponse(this)" value="Play Next Show">Play Next Show
+                                <span class="glyphicon glyphicon-fast-forward"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Everyone either loves it... hates it... or thinks it's just OK -->
+                <!--  tell me what you think of this song so i can do some sciency shit and choose better songs for you er something-->
+                <div id='like' class="row">
+                    <div class='wrapper text-center col'>
+                        <div class="btn-group">
+                            <button id="loveIt" type="button" class="btn btn-success btn-lg" onclick="addUserResponse(this)" value="I love it">I love it
+                                <span class="glyphicon glyphicon-heart pull-right"></span>
+                            </button>
+                            <button id="hateIt" type="button" class="btn btn-danger btn-lg" onclick="addUserResponse(this)" value="I hate it">I hate it
+                                <span class="glyphicon glyphicon-fire pull-right"></span>
+                            </button>
+                            <!--  Get offended at hate. that's just like your opinion man-->
+                        </div>
+                    </div>
+                </div>
+
+                <form id="review">
+                    <div class="form-group">
+                        <label for="comment">Tell me what you 're thinking...</label>
+                        <textarea id="userComment" class="form-control" rows="5" id="comment"></textarea>
+                        <div class='wrapper text-right col'>
+                            <button id="noComment" type="button"  class="btn btn-primary pull-right" onclick="addUserResponse(this)" value="I got nothing to say">
+                                I got nothing to say
+                            </button>
+                            <button id="songComment" type="button" class="btn btn-primary pull-right" onclick="submitUserComment()">
+                                Submit <span class="glyphicon glyphicon-comment pull-right"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div><!-- /.container -->
+        <br>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="./js/jquery-3.1.1.slim.min.js"></script>
+        <script src="./js/tether.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/myscripts.js"></script>
+
     </body>
 </html>

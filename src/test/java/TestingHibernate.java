@@ -61,8 +61,8 @@ public class TestingHibernate extends TestCase {
      public void testIfShowAndSongHaveTheSameID() {
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        List<Shows> result = session.createQuery("from Shows").setMaxResults(10).list();
-        assert(result.size() == 10);
+        List<Shows> result = session.createQuery("from Shows").setMaxResults(5).list();
+        assert(result.size() == 5);
         Shows show = result.get(1);
         assertNotEquals(show.getId(), show.getSetList().iterator().next().getId());
         session.getTransaction().commit();

@@ -42,7 +42,6 @@ public class Hibernate {
             // so destroy it manually.
             StandardServiceRegistryBuilder.destroy(registry);
             Logger.getLogger(Hibernate.class.getName()).log(Level.SEVERE, null, e);
-
         }
         }
     }

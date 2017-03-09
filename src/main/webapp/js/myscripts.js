@@ -39,7 +39,7 @@ addLoadEvent(botStart);
 function botStart() {
   addLoadingAnimation();
   console.log('botStarted');
-  var url = "/moebot/start";
+  var url = "/start";
   request.open("GET", url, true);
   request.send();
 }
@@ -170,7 +170,7 @@ function addUserResponse(buttonClicked) {
 function getBotResponse(source)
 {
   addLoadingAnimation();
-  var url = "/moebot/" + source;
+  var url = "/" + source;
   request.open("GET", url, true);
   request.send();
   console.log('Requesting:' + url);

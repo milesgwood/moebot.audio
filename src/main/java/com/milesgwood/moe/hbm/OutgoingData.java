@@ -35,7 +35,8 @@ public class OutgoingData{
     public static Songs retrieveSongs(){
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        List<Songs> results = session.createQuery("from Songs").setMaxResults(1).list();
+        String hql = "from Songs order by rand()";
+        List<Songs> results = session.createQuery(hql).setMaxResults(1).list();
         session.close();
         Songs newSong = results.get(0);
         return newSong;

@@ -33,7 +33,7 @@ public class StartBotServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<li class='talk-bubble tri-left round border left-top botmsg'>Chat with me to sift through the 28 years of live moe. recordings in search of forgotten gems. If you're busy working you can just listen, and I'll keep the music flowing.</li><li class='talk-bubble tri-left round border left-top botmsg'>What do you want to do?</li>");
+            out.println("What do you want to do?");
         }
     }
 

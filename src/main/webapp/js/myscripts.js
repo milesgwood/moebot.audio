@@ -2,6 +2,7 @@
 var request;
 var currentShow;
 var nextSongIndex = 0;
+var welcomMessage = "Chat with me to sift through the 28 years of live moe. recordings in search of forgotten gems. If you're busy working you can just listen, and I'll keep the music flowing."
 
 window.onload = function () {
     try {  // for Firefox, IE7, Opera
@@ -43,12 +44,25 @@ function addLoadEvent(func) {
 }
 addLoadEvent(botStart);
 
+//Once the page loads the bot will say it's default messages.
 function botStart() {
+  //The I'm moebot message is hardcoded into index.html
+  //This second message is coded in javascript as a global var.
+  //The third message comes from the start servlet.
   addLoadingAnimation();
-  console.log('botStarted');
+  addBotResponse(formatBotResponse(welcomMessage));
+  addLoadingAnimation();
   var url = "/start";
   request.open("GET", url, true);
   request.send();
+  /*Once this request gets a response,
+  loadingAnimation()
+  updatePage()
+  updateShow()
+  formatBotResponse()
+  addBotResponse()
+  removeLoadingAnimation()
+  */
 }
 
 //Adds the loading animation at the bottom of the chat
@@ -68,13 +82,24 @@ function removeLoadingAnimation(){
   console.log('Animation removed');
 }
 
-//This adds the bot response directly directly
+//This adds the bot response directly directly.
+//It doesn't have the li ro span tag around it
+//Cal formatBotResponse to put the li and span tags around it first
 function addBotResponse(serverResponse){
   setTimeout(function() {
     removeLoadingAnimation();
     $("#chatUl").append(serverResponse);
-  }, 350);
+  }, 330);
+  //(Math.floor((Math.random() * 350) + 1))
   console.log('Adding bot response');
+}
+
+//Formats the bot response with a li and span tag
+function formatBotResponse(unformattedString){
+  var open = '<li class="talk-bubble tri-left round border left-top botmsg">'
+              + '<span class="archive-bubble">' ;
+  var close = '</span></li>' ;
+  return open + unformattedString + close;
 }
 
 
@@ -210,7 +235,7 @@ function formatNextSongInPlaylist() {
                 + ' allowfullscreen>Description of song</iframe>'
   var song = currentShow.setList[nextSongIndex%currentShow.setList.length]
   var songData =  '<br><div class="songMetaText">Song:\t</div>'  +' '+ song.title
-                + '<br><div class="songMetaText">Date:</div>'  +' '+ currentShow.date
+                //+ '<br><div class="songMetaText">Date:</div>'  +' '+ currentShow.date
                 + '<br><div class="songMetaText">Venue:</div>' +' '+ currentShow.venue
                 + '<br><div class="songMetaText">Show:</div>'  +' '+ currentShow.showName
                 + '<br><div class="songMetaText">Length:</div>'+' '+ song.length + ' sec'
@@ -245,7 +270,7 @@ function updatePage() {
             //Otherwise we just have a bot response
             else {
               console.log('200 response TEXT:' + res);
-              addBotResponse(res);
+              addBotResponse(formatBotResponse(res));
             }
         }
         else {

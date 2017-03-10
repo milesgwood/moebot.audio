@@ -55,11 +55,6 @@
   margin: auto;
 }
 
-body {
-  background-image: url("https://i.ytimg.com/vi/Vi0gsH6QgQ8/maxresdefault.jpg");
-  background-repeat: repeat-y;
-}
-
 #button-window  {
   background-color: lightgray;
   padding: 1em;
@@ -232,4 +227,13 @@ body {
 .songMetaText{
   color: black;
   display: inline-block;
+}
+
+body{
+    background: url(https://i.ytimg.com/vi/Vi0gsH6QgQ8/maxresdefault.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
 }

@@ -5,7 +5,6 @@
  */
 package com.milesgwood.moe.servlets;
 
-import com.milesgwood.moe.hbm.OutgoingData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author vicetad
  */
-@WebServlet(name = "PlayShowServlet", urlPatterns = {"/justListen", "/listenAndRate", "/getNextShow"})
-public class PlayShowServlet extends HttpServlet {
+@WebServlet(name = "PositiveServlet", urlPatterns = {"/PositiveServlet", "/loveIt"})
+public class PositiveServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +31,9 @@ public class PlayShowServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println(OutgoingData.retrieveShow().toJSON());
-            out.flush();
+            out.println("Awesome! I love that recording too. What do you like about it? If you don't want to chat about that song how about you tell me your favorite moe. story. You have any moe. stories?");
         }
     }
 

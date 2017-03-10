@@ -1,6 +1,7 @@
 # moebot.audio
 A chatbot that sorts through live recordings of the band moe.
 
+www.moebot.audio
 
 Goals
  - Sort through the enormous volume of live moe. recordings

@@ -21,7 +21,8 @@ public class OutgoingData{
     public static Shows retrieveShow(){
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        List<Shows> results = session.createQuery("from Shows").setMaxResults(1).list();
+        String hql = "from Shows order by rand()";
+        List<Shows> results = session.createQuery(hql).setMaxResults(1).list();
         session.close();
         Shows newShow = results.get(0);
         return newShow;

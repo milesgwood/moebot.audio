@@ -8,4 +8,5 @@ Goals
  - Create a codebase that be used for other bands too
 
 MySQL Database on AWS uses Hibernate
+
 View uses Bootstrap and AJAX

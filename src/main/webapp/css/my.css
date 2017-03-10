@@ -227,3 +227,9 @@ body {
 .not-visible {
   visibility: hidden;
 }
+
+/* Updated CSS for version 3 */
+.songMetaText{
+  color: black;
+  display: inline-block;
+}

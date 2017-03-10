@@ -182,8 +182,6 @@ function addUserResponse(buttonClicked) {
     buttonClicked.value +
     '</p>' +
     '</li>');
-    console.log('New Item in list: ' + buttonClicked.value);
-    console.log("User triggered :" + buttonClicked.id);
     // Get the next item from the server and show the proper buttons
     getBotResponse(buttonClicked.id);
     displayCorrectButtons(buttonClicked.id);
@@ -216,13 +214,27 @@ function displayCorrectButtons(source){
 }
 
 
-function submitUserComment() {
-  var comment = document.getElementById('userComment');
+function submitUserComment(buttonClicked) {
+  var comment = document.getElementById('userComment').value;
   console.log('Comment added: ' + comment.value);
-  // Submit the comment to the databse here
+  showUserComment(comment);
+  addLoadingAnimation();
+  var url = "/makeReview";
+  //Since this gets submitted as a POST it takes a parameter
+  request.open("POST", url, true);
+  request.send("comment="+comment);
+  displayCorrectButtons(buttonClicked.id);
   toBottom();
 }
 
+function showUserComment(comment)
+{
+  $("#chatUl").append('<li class="usrmsg">'
+  + '<p class="triangle-right top">'
+  + comment
+  + '</p>'
+  + '</li>');
+}
 //Scripts added as of March 2017 -- view version 3
 
 function formatNextSongInPlaylist() {

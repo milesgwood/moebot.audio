@@ -3,24 +3,27 @@ var request;
 var currentShow;
 var nextSongIndex = 0;
 var welcomMessage = "Chat with me to sift through the 28 years of live moe. recordings in search of forgotten gems. If you're busy working you can just listen, and I'll keep the music flowing."
+//Used to automatically start the next song. Needs to be cleared when user clicks anything.
+var autoPlayTimeout;
+var loadingNextSongTimeout;
 
 window.onload = function () {
     try {  // for Firefox, IE7, Opera
-        request = new XMLHttpRequest()
-        request.onreadystatechange = updatePage
+        request = new XMLHttpRequest();
+        request.onreadystatechange = updatePage;
     }
     catch (exc) {
         try {  // for IE6
-            request = new ActiveXObject('MSXML2.XMLHTTP.5.0')
-            request.onreadystatechange = updatePage
+            request = new ActiveXObject('MSXML2.XMLHTTP.5.0');
+            request.onreadystatechange = updatePage;
         }
         catch (e) {
-            request = false
+            request = false;
         }
     }
     if (!request) {
         alert("Error initializing XMLHttpRequest!");
-        showAllButtons()
+        showAllButtons();
     }
     // showAllButtons()
 }
@@ -46,23 +49,12 @@ addLoadEvent(botStart);
 
 //Once the page loads the bot will say it's default messages.
 function botStart() {
-  //The I'm moebot message is hardcoded into index.html
-  //This second message is coded in javascript as a global var.
-  //The third message comes from the start servlet.
   addLoadingAnimation();
   addBotResponse(formatBotResponse(welcomMessage));
   addLoadingAnimation();
   var url = "/start";
   request.open("GET", url, true);
   request.send();
-  /*Once this request gets a response,
-  loadingAnimation()
-  updatePage()
-  updateShow()
-  formatBotResponse()
-  addBotResponse()
-  removeLoadingAnimation()
-  */
 }
 
 //Adds the loading animation at the bottom of the chat
@@ -73,25 +65,26 @@ function addLoadingAnimation() {
         '<span></span>'+
         '<span></span>'+
       '</div></li></div>');
+      console.log('Added Animation ');
 }
 
 //Removes the loading animation at the bottom of the chat
 function removeLoadingAnimation(){
   var loadingBot = document.getElementById('loadingBot');
-  loadingBot.parentNode.removeChild(loadingBot);
-  console.log('Animation removed');
+  if(loadingBot)
+  {
+    loadingBot.parentNode.removeChild(loadingBot);
+    console.log('Removed Animation');
+  }
 }
 
 //This adds the bot response directly directly.
 //It doesn't have the li ro span tag around it
 //Cal formatBotResponse to put the li and span tags around it first
 function addBotResponse(serverResponse){
-  setTimeout(function() {
     removeLoadingAnimation();
     $("#chatUl").append(serverResponse);
-  }, 330);
-  //(Math.floor((Math.random() * 350) + 1))
-  console.log('Adding bot response');
+    toBottom();
 }
 
 //Formats the bot response with a li and span tag
@@ -125,16 +118,10 @@ function showAllButtons()
 function showMainPlayButtons()
 {
   $("#start_options").css("display", "none");
-  // $("#main_options").css("display", "none");
-  // $("#play").css("display", "none");
   $("#like").css("display", "none");
   $("#review").css("display", "none");
-
-  // $("#start_options").css("display", "flex");
   $("#main_options").css("display", "flex");
   $("#play").css("display", "flex");
-  // $("#like").css("display", "flex");
-  // $("#review").css("display", "block");
   toBottom();
 }
 
@@ -143,14 +130,8 @@ function showLikeButtons()
   $("#start_options").css("display", "none");
   $("#main_options").css("display", "none");
   $("#play").css("display", "none");
-  // $("#like").css("display", "none");
   $("#review").css("display", "none");
-
-  // $("#start_options").css("display", "flex");
-  // $("#main_options").css("display", "flex");
-  // $("#play").css("display", "flex");
   $("#like").css("display", "flex");
-  // $("#review").css("display", "block");
   toBottom();
 }
 
@@ -160,19 +141,12 @@ function showReviewButtons()
   $("#main_options").css("display", "none");
   $("#play").css("display", "none");
   $("#like").css("display", "none");
-  // $("#review").css("display", "none");
-
-  // $("#start_options").css("display", "flex");
-  // $("#main_options").css("display", "flex");
-  // $("#play").css("display", "flex");
-  // $("#like").css("display", "flex");
   $("#review").css("display", "block");
   toBottom();
 }
 
 
 function toBottom(){
-console.log("Scrolling to bottom ...");
 window.scrollTo(0, document.body.scrollHeight);
 }
 
@@ -276,8 +250,7 @@ function updatePage() {
             if(resType == "application/json;charset=UTF-8") {
               console.log('200 response JSON: New Show');
               updateCurrentShow(res);
-              var formatedResponse = formatNextSongInPlaylist();
-              addBotResponse(formatedResponse);
+              playNextSong();
             }
             //Otherwise we just have a bot response
             else {
@@ -297,6 +270,9 @@ function updatePage() {
 //The show is already stored in global memory
 function userClickedPlayNextSong(buttonClicked)
 {
+  //First stop the autoplay
+  clearTimeout(autoPlayTimeout);
+  clearTimeout(loadingNextSongTimeout);
   $("#chatUl").append('<li class="usrmsg">' +
   '<p class="triangle-right top">' +
   buttonClicked.value +
@@ -308,9 +284,42 @@ function userClickedPlayNextSong(buttonClicked)
   displayCorrectButtons(buttonClicked.id);
 }
 
+//This makes the previous song's player disappear
+function removeSongPlayers()
+{
+    var elements = document.getElementsByTagName('iframe');
+    while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
+}
+
 function playNextSong()
 {
+  //This function needs to check if the Show is a good show and collect errors if it is not a good show
+  removeLoadingAnimation();
   addLoadingAnimation();
-  var nextSong = formatNextSongInPlaylist();
-  addBotResponse(nextSong);
+  if(currentShow.setList.length == 0)
+  {
+      console.log("ERROR: Empty Setlist Show ID: " + currentShow.id);
+      addBotResponse("The show with ID " + currentShow.id + " is broken. Let me find another show.");
+      getBotResponse("getNextShow");
+  }
+  else
+  {
+    var nextSong = formatNextSongInPlaylist();
+    //Find out how long the current song is and set up the call for the next song
+    var songLength = currentShow.setList[(nextSongIndex-1)%(currentShow.setList.length)].length * 1000;
+    if(songLength == 0)
+    {
+      console.log("ERROR: Empty Song Length Song ID: " + nextSong.id + " Show ID: " + currentShow.id);
+      addBotResponse("Wait a second... This show has corrupted songs. Show ID: " + currentShow.id + " needs fixing. Let me find another show.");
+      getBotResponse("getNextShow");
+    }
+    else //The song can play and we set the auto play to the song's length
+    {
+        autoPlayTimeout = setTimeout(playNextSong, songLength);
+        loadingNextSongTimeout = setTimeout(addLoadingAnimation, songLength - 400);
+        console.log("Song Length: " + songLength);
+        removeSongPlayers();
+        addBotResponse(nextSong);
+    } 
+  }
 }

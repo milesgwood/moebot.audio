@@ -74,6 +74,8 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <!--This should skip tests but it isn't -->
+                    <!--<skipTests>true</skipTests> -->
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>

@@ -2,7 +2,7 @@
 var request;
 var currentShow;
 var nextSongIndex = 0;
-var welcomMessage = "Chat with me to sift through the 28 years of live moe. recordings in search of forgotten gems. If you're busy working you can just listen, and I'll keep the music flowing."
+var welcomMessage = "Chat with me to sift through the 28 years of live moe. recordings in search of forgotten gems. If you're busy working you can just listen, and I'll keep the music flowing. You need to put this tab in its own window though, otherwise autoplay won't work."
 //Used to automatically start the next song. Needs to be cleared when user clicks anything.
 var autoPlayTimeout;
 var loadingNextSongTimeout;
@@ -187,7 +187,6 @@ function displayCorrectButtons(source){
   toBottom();
 }
 
-
 function submitUserComment(buttonClicked) {
   var comment = document.getElementById('userComment').value;
   console.log('Comment added: ' + comment.value);
@@ -219,17 +218,28 @@ function formatNextSongInPlaylist() {
                 + '&autoplay=true"'
                 + ' width="500" height="30" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true"'
                 + ' allowfullscreen>Description of song</iframe>'
-  var song = currentShow.setList[nextSongIndex%currentShow.setList.length]
-  var songData =  '<br><div class="songMetaText">Song:\t</div>'  +' '+ song.title
+  var song = currentShow.setList[nextSongIndex%currentShow.setList.length];
+
+  var songData ='<br><div class="songMetaText">Song:\t</div>'  +' '+ song.title
                 //+ '<br><div class="songMetaText">Date:</div>'  +' '+ currentShow.date
-                + '<br><div class="songMetaText">Venue:</div>' +' '+ currentShow.venue
-                + '<br><div class="songMetaText">Show:</div>'  +' '+ currentShow.showName
-                + '<br><div class="songMetaText">Length:</div>'+' '+ song.length + ' sec'
-                + '<br><div class="songMetaText">Album:</div>' +' '+ song.album
-  var close = '<br> Enjoy, you moe.ron :)</span></li>' ;
-  var body = open + frame + songData + close;
-  nextSongIndex++;
-  return body;
+            + '<br><div class="songMetaText">Venue:</div>' + ' ' + currentShow.venue
+            + '<br><div class="songMetaText">Show:</div>' + ' ' + currentShow.showName
+            + '<br><div class="songMetaText">Length:</div>' + ' ' + song.length + ' sec'
+            + '<br><div class="songMetaText">Album:</div>' + ' ' + song.album
+    var close = '<br> <h5 style="float: left">Enjoy your day moe.ron :)</h5>';
+
+    //This component creates a download button that can download songs from the archive servers.
+    var download= '<button class="download-btn btn-sm">'
+                //+ '<a href="/download/moe2006-02-02_urbana_CMXY.flac16/moe2006-02-02d1t02_new_york_city.flac" download="moeSongName>'
+                + '<a href="https://archive.org/download/' + currentShow.showUrl + '/' + song.name
+                +  '" download="' + song.title + '-' + song.venue + '-' + song.showName + '-' + song.name + '" >'
+                + '<span>Download</span></a></button><br><br><div class="c-rating"></div>';
+
+        console.log("Download is " + download);
+
+    var body = open + frame + songData + close + download;
+    nextSongIndex++;
+    return body;
 }
 
 function updateCurrentShow(unformattedResponse)
@@ -320,6 +330,40 @@ function playNextSong()
         console.log("Song Length: " + songLength);
         removeSongPlayers();
         addBotResponse(nextSong);
-    } 
+    }
   }
+
+  //debugger;
+  // target element
+  var rating_elements = document.getElementsByClassName("c-rating");
+  var cur_rating_el = rating_elements[rating_elements.length-1];
+
+  // current rating, or initial rating
+  var currentRating = 0;
+
+  // max rating, i.e. number of stars you want
+  var maxRating= 10;
+
+  // callback to run after setting the rating
+  var callback = function(rating) { alert(rating); submitUserRating(rating); };
+
+  // rating instance
+  var myRating = rating(cur_rating_el, currentRating, maxRating, callback);
+}
+
+
+function submitUserRating(score){
+  addLoadingAnimation();
+  //Since this gets submitted as a POST it takes a parameter
+  var song = getCurrentSong();
+  request.open("POST", "/rating", true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  var params = "score="+score+"&song="+song.id;
+  request.send(params);
+  toBottom();
+}
+
+function getCurrentSong()
+{
+  return currentShow.setList[(nextSongIndex-1)%currentShow.setList.length];
 }

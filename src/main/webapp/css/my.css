@@ -237,3 +237,57 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+
+/*Only about the download buttons */
+
+.download-btn {
+float: right; 
+}
+
+.salutation {
+   width: 80%;
+   float: left; 
+}
+
+.download {
+border-radius: 5px;
+  background-color: #aaaaaa;
+  border: none;
+  color: red;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.download span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.download span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.download:hover span {
+  padding-right: 25px;
+  
+}
+
+.download:hover span:after {
+  opacity: 1;
+  
+  right: 0;
+}
+

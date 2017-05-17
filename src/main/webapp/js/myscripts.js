@@ -345,7 +345,7 @@ function playNextSong()
   var maxRating= 10;
 
   // callback to run after setting the rating
-  var callback = function(rating) { alert(rating); submitUserRating(rating); };
+  var callback = function(rating) { submitUserRating(rating); };
 
   // rating instance
   var myRating = rating(cur_rating_el, currentRating, maxRating, callback);
